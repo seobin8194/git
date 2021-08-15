@@ -1,0 +1,137 @@
+git이란?
+버전관리 시스템의 한 종류
+* 버전 관리
+여러 파일을 하나의 버전으로 묶어서 관리하는 것을 말한다
+프로그램을 개발하다가 수정할때 소스를 덮어쓰면서 업그레이드를 한다 -> 기존 코드가 없어진다 -> 기존으로 돌아가기 어렵다
+따라서 개발시 히스토리를 남기면서 개발해야한다
+* 버전관리 시스템의 종류
+1. 클라이언트 - 서버 모델
+   하나의 중앙 서버로 여러 클러이언트들이 각자 필요한 데이터만 서버에서 가져와서 작업을 하고 다시 중앙 서버로 보내어 중앙 서버에서 통합
+   CVS, subversion(SVN)
+2. 분산 모델
+   하나의 중앙 서버가 존재하지만 여러 클러이언트들은 각자 컴퓨터 저장소에 전체 사본을 가지고 작업하는 방식
+   내가 수정해도 다른 사람이 수정한거랑 겹치지 않는다
+   git
+
+git 장점
+1. 동시에 작업을 하는 사람들과 소스코드를 주고받을 필요가 없다
+2. 같은 파일을 여러명이 동시에 병렬개발이 가능하다
+3. 변동과정을 체계적으로 관리할 수 있고 언제든지 지난 시점의 버전으로 되돌릴 수 있다
+4. 인터넷이 연결되지 않는 곳에서도 개발이 가능하고 중앙 서버의 데이터가 유실되도 복구 가능
+   기본적으로 git은 프로그램이고 내 컴퓨터에 저장되어 있고 사본을 중앙 서버에 업로드하여 공유하는 것
+
+github란?
+저장소. git으로 버전관리한 코드를 올릴 수 있는 클라우드 서버
+내 컴퓨터가 아닌 곳에 저장하고 싶을때(백업용)
+단순히 저장만 하는것이 아니라 다른 유저들과 함께 코드를 공유할 수 있고 온라인으로 하나의 프로그램을 같이 제작할 수 있다
+private 보장이 안되므로 중요문서 x
+3명까지 공짜로 작업 가능
+
+git 설치
+1. cmd 에서 git을 입력하고 설치되어 있는지 확인
+   설치가 되지 않았을 경우 'git'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다. 라고 뜬다
+2. 구글에서 "깃 설치"로 검색 후 "Git 설치 - Git" 선택
+3. 왼쪽에 dowmload 클릭 -> widows 를 클릭 (다운로드 진행)
+4. 기본 설정을 유지하고 설치를 완료 (계속 다음 클릭)
+5. git bash -> 명령어를 작성하는 창 
+ITSC@DESKTOP-L7VVF0L MINGW64 ~
+$
+-> 현재 위치이고 명령어 기다리는 중
+-> git을 입력하면 git 명령어가 출력된다
+
+로컬 저장소 생성하기
+git은 폴더(프로젝트)단위로 버전관리하며 해당 폴더 경로에서 git 초기화를 하여 해당 프로젝트 버전관리를 한다
+1. 내 컴퓨터에 git을 사용할 폴더(gitStudy, 프로젝트 폴더)를 만든다
+2. git bash에서 gitStudy 폴더에 접근한다
+   - 방법1
+     gtStudy 폴더안에서 shift+오른쪽 마우스 -> git bash here 선택
+   - 방법 2
+     pwd : 현재 디렉토리 경로 표시
+     ls : 현재 디렉토리에 있는 디렉토리와 파일을 표시
+     cd : 다른 디렉토리로 이동
+           cd .. 상위 디렉토리로 이동
+           cd 디렉토리 : 해당 디렉토리로 이동 (디렉토리 이름 몇글자입력하고 tab누르면 자동완성)
+3. 버전관리에 이용할 파일들을 저장할 폴더(.git)를 만든다
+   프로젝트마다 프로젝트 폴더 안에 만들고 만약 다른 버전의 프로젝트 폴더를 다운받을땐 또 다른 프로젝트 폴더를 만들어야한다
+   git bash에서 이전 단계에서 이동한 프로젝트 폴더까지의 경로에서 git init 명령 실행
+   * git bash에서 폴더가 안보일때(숨겨져 있을 때) ls -al
+   * 프로젝트 폴더안에서 폴더가 안보일때(숨겨져 있을 때) 윈도우창 상단에 보기탭 -> 고급 설정 -> 숨긴 팡리 및 폴더 -> 숨김 파일, 폴더 및 드라이브 표시로 체크
+
+프로젝트 진행
+visual studio code에서 프로젝트 폴더안에 README.md index.html style.css 파일 생성
+README.md는 github에서 저장소를 처음 들어 갔을때 나오는 설명서같은 파일
+
+진행한 프로젝트를 로컬 저장소에 저장하여 버전관리
+1. 버전관리할 파일 선택(스테이지에 올림)
+git add README.md
+2. 버전관리할 파일 commit -> 하나의 버전이 만들어짐
+git commit -m "README.md 파일 추가"
+-----------------------아래 에러시 처리법-----------------------
+Author identity unknown
+*** Please tell me who you are.
+Run
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+fatal: unable to auto-detect email address (got 'ITSC@DESKTOP-L7VVF0L.(none)')
+다음과 같이 처리한다
+git config --global user.email "wjdtjqls1010@naver.com"
+git config --global user.name "정서빈"
+git commit -m "README.MD를 추가했어요" 재실행
+----------------------------------------------------------------
+3. 로그 확인
+git log
+4. 여러 파일 한번에 선택해서 commit
+git add .
+git commit -m "index.html style.css 파일추가"
+
+내 저장소에 저장한 프로잭트의 버전들을 원격 저장소(github)에 push
+1. github 주소 알려주기
+버전 관리한거 이 주소에 저장한다
+git remote add origin https://github.com/JeongSeoBin/gitTest.git
+2. 만든 버전(commit)을 github에 push
+git push -u origin master 
+
+원격 저장소(github)에서 내 컴퓨터로 내려받기 (clone)
+github에서 download zip으로 가져와서 설정하는 것도 가능하나 다른 사람이 만든거 환경설정까지 그대로 가져오려면
+1. 또 다른 프로젝트 폴더(gitClone)를 생성하고 생성한 폴더로 경로 이동
+2. clone
+git clone https://github.com/JeongSeoBin/gitTest.git
+-> gitTest 폴더를 생성하고 그 안에 파일 저장
+--------------------폴더 및 파일 삭제----------------------
+rm -rf gitTest
+--------------------------------------------------------------
+git clone https://github.com/JeongSeoBin/gitTest.git .
+-> 폴더를 생성하지 않고 파일만 저장
+3. 내려받은 프로젝트를 수정해서 다시 commit하고 github에 push
+git add .
+git commit -m "1차 수정"
+git push -u origin master
+
+*******************************************************************************************************************************
+GitHub Pages
+깃허브에 올려진 내용을 서비스할 수 있는 호스팅 서비스
+정적 웹 사이트 호스팅을 해주는 깃허브 페이지를 이용하여 웹 페이지를 서비스할 수 있음
+깃허브 페이지는 깃허브에서 제공하는 정적 사이트 호스팅 서비스로 html 컨텐츠를 지원하는 것 외에도 여러가지 정적 사이트 생성기인 Jekyll을 지원
+
+settings -> GitHub Pages에서 Check it out here 클릭 -> Source란에서 branch와 folder선택 후 save -> 상단에 웹 사이트 주소 생성
+
+*******************************************************************************************************************************
+소스트리 다운로드
+http://www.sourcetreeapp.com/
+bitbucket = github 건너뛰기 -> 메일 이름 github에서 가져온거 뜸 -> 아니요 -> gitStudy 드래그
+
+master꺼를 다운받아 서로 다른 사람(MASTER1 MASTER2)이 수정함
+MASTER소스가 두 BRANCH로 갈림 나중에 MASTR가 통합
+
+gitStudy에 github최신버전 PULL -> PATCH (내려받은거 내꺼에 반영)
+
+ORIGIN/MASTER GIT에 올라간 파일
+MASTER 내 저장소에만 저장된 버전
+
+COMMIT 내 저장소에만 수정 GIT에는 올라가지 않음 -> PUSH 해야함
+********************************************************************************************************************************
+github 다른사람과의 협업하기
+github 메인 -> setting -> manage access -> collaborator를 초대
+*********************************************************************************************************************************
